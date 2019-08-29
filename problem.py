@@ -324,6 +324,8 @@ if __name__ == "__main__":
     parser.add_argument("-p","--prob",default=0.6,type=int,help="Remove probability for edges in biderectional graph")
     parser.add_argument("-l","--lensol",default='6',type=int,help="Minimal length for path solution")
     parser.add_argument("-w","--worst",default='2',type=int,help="Number of worst problems")
+    parser.add_argument("-s","--strategy",default='ABDUG',type=str,help="Char list of:(A),(B)readth,(D)epth,(U)niform and (G)reedy")
+    parser.add_argument("-d","--depth",default='0',type=int,help="Max depth ")
     args = parser.parse_args()
     
 
