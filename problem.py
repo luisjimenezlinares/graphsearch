@@ -276,12 +276,13 @@ class Problem:
                         s.cut="CUT"
         return (path,root)
 
-def sol_files(name,strid,path,tree,stg):
+def sol_files(name,strid,path,tree,stg,trace):
         if sol==None:
             print("_%s_%s no solution"%(strid,stg))
             return
         else:
-            print (name+"_%s_%s"%(strid,stg))
+            if trace>0:
+                print (name+"_%s_%s"%(strid,stg))
 
         f=open("%s_%s_%s_"%(name,strid,stg)+'.dot','w')
         f.write(tree.tree_dot())
@@ -326,6 +327,7 @@ if __name__ == "__main__":
     parser.add_argument("-w","--worst",default='2',type=int,help="Number of worst problems")
     parser.add_argument("-s","--strategy",default='ABDUG',type=str,help="Char list of:(A),(B)readth,(D)epth,(U)niform and (G)reedy")
     parser.add_argument("-d","--depth",default='0',type=int,help="Max depth ")
+    parser.add_argument("-t","--trace",default='0',type=int,help="[0|1] active trace")
     args = parser.parse_args()
     
 
@@ -349,13 +351,13 @@ if __name__ == "__main__":
         depth=args.depth
 
     if 'A' in args.strategy:
-        sol_files(p.name,'',sol,tree,'A')
+        sol_files(p.name,'',sol,tree,'A',args.trace)
 
     list_stg=[('B','Breadth'),('D','Depth'),('U','Uniform'),('G','Greedy')]
     for stg in list_stg:
         if stg[0] in args.strategy:
             (sol,tree)=p.search(strategy=stg[1],depth=depth)
-            sol_files(p.name,'',sol,tree,stg[1])
+            sol_files(p.name,'',sol,tree,stg[1],args.trace)
 
     create_zip(p.name)
 
@@ -380,13 +382,13 @@ if __name__ == "__main__":
             depth=args.depth
 
         if 'A' in args.strategy:
-            sol_files(p.name,'h%i'%args.worst,sol,tree,'A')
+            sol_files(p.name,'h%i'%args.worst,sol,tree,'A',args.trace)
 
         list_stg=[('B','Breadth'),('D','Depth'),('U','Uniform'),('G','Greedy')]
         for stg in list_stg:
             if stg[0] in args.strategy:
                 (sol,tree)=p.search(strategy=stg[1],depth=depth)
-                sol_files(p.name,'h%i'%args.worst,sol,tree,stg[1])
+                sol_files(p.name,'h%i'%args.worst,sol,tree,stg[1],args.trace)
         
         create_zip(p.name+'_h%i'%args.worst)
 
