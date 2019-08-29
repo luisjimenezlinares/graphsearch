@@ -343,13 +343,19 @@ if __name__ == "__main__":
 
     #A star solution
     (sol,tree)=p.search(strategy='A')
-    depth=len(sol)+3
-    sol_files(p.name,'',sol,tree,'A')
+    if args.depth==0:
+        depth=len(sol)+3
+    else:
+        depth=args.depth
 
-    list_stg=['Breadth','Depth','Uniform','Greedy']
+    if 'A' in args.strategy:
+        sol_files(p.name,'',sol,tree,'A')
+
+    list_stg=[('B','Breadth'),('D','Depth'),('U','Uniform'),('G','Greedy')]
     for stg in list_stg:
-        (sol,tree)=p.search(strategy=stg,depth=depth)
-        sol_files(p.name,'',sol,tree,stg)
+        if stg[0] in args.strategy:
+            (sol,tree)=p.search(strategy=stg[1],depth=depth)
+            sol_files(p.name,'',sol,tree,stg[1])
 
     create_zip(p.name)
 
@@ -368,12 +374,19 @@ if __name__ == "__main__":
 
         #A star solution
         (sol,tree)=p.search(strategy='A')
-        depth=len(sol)+3
-        sol_files(p.name,'h%i'%args.worst,sol,tree,'A')
+        if args.depth==0:
+            depth=len(sol)+3
+        else:
+            depth=args.depth
 
+        if 'A' in args.strategy:
+            sol_files(p.name,'h%i'%args.worst,sol,tree,'A')
+
+        list_stg=[('B','Breadth'),('D','Depth'),('U','Uniform'),('G','Greedy')]
         for stg in list_stg:
-            (sol,tree)=p.search(strategy=stg,depth=depth)
-            sol_files(p.name,'h%i'%args.worst,sol,tree,stg)
+            if stg[0] in args.strategy:
+                (sol,tree)=p.search(strategy=stg[1],depth=depth)
+                sol_files(p.name,'h%i'%args.worst,sol,tree,stg[1])
         
         create_zip(p.name+'_h%i'%args.worst)
 
