@@ -24,10 +24,10 @@ class Node:
         self.sons=[]
         
     def keys(self):
-        return (self.f,self.state,self.id)
+        return (self.f,self.id)
         
     def __cmp_key(self):
-        return (self.f,self.state,self.id)
+        return (self.f,self.id)
            
     def __lt__(self,other):
         return self.__cmp_key()< other.__cmp_key()
@@ -249,7 +249,7 @@ class Problem:
         root.f=strategies[strategy](root)
         heapq.heappush(border, (root, root.keys()))
         memory[self.orig]=root.f
-        #Start searchinghttps://docs.python.org/2/tutorial/datastructures.html
+        #Start searching
         while (len(border)>0) and (path == None) and (act_depth<depth):
             (n,val)=heapq.heappop(border)
             n.cut="*"
@@ -257,7 +257,7 @@ class Problem:
             if n.state == self.dest:
                 path=n.path()
             else:
-                for son in dict(self.G[n.state]).keys():
+                for son in sorted(dict(self.G[n.state]).keys()):
                     s=Node()
                     s.state=son
                     s.father=n
