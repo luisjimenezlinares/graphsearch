@@ -24,10 +24,10 @@ class Node:
         self.sons=[]
         
     def keys(self):
-        return (self.f,self.id)
+        return (self.f,self.state,self.id)
         
     def __cmp_key(self):
-        return (self.f,self.id)
+        return (self.f,self.state,self.id)
            
     def __lt__(self,other):
         return self.__cmp_key()< other.__cmp_key()
